@@ -15,9 +15,13 @@ What will it handle
 
 
 
-## Public interface
+## Public interface   
 
-### [ ] `data_struct_t *ioopm_create_some_data_structure(void *some_argument, int or_more, error_t *error)`
+
+### `data_struct_t *ioopm_create_some_data_structure(void *some_argument, int or_more, error_t *error)`
+##### Is Completed
+- [x] issue link here
+
 ##### Responsibility
 - briefly describe purpose.  
 Example:  
@@ -46,7 +50,9 @@ Choose on of the following:
   - `SIZE_TO_SMALL` error
 
 
-### [ ] `void ioopm_destroy_some_data_structure(void * some_argument)`
+### `void ioopm_destroy_some_data_structure(void * some_argument)`
+##### Is Completed
+- [x] issue link here
 ##### Responsibility
 - Text here
 
@@ -66,14 +72,17 @@ Choose on of the following:
 
 ## Private interface
 
-### [ ] `int get_int_data_from_struct(some_struct_t *some_argument)`
-##### Responsibility
+### `int get_int_data_from_struct(some_struct_t *some_argument)`
+##### Is Completed
+- [x] issue link here  
+
+##### Responsibility  
 - Text here
 
-##### Abstraction Level
+##### Abstraction Level  
 - Tier: 1, 2, 3, 4, 5
 
-##### Assumptions
+##### Assumptions  
 - `assumption here`
 
 ##### Returns
@@ -85,14 +94,14 @@ Choose on of the following:
 
 
 ## Depends on
-[ ] <File_Name.h>
+- [ ] <File_Name.h>
 
-[ ] <some_data_structure.h>  
-  1. `<ioopm_some_public_function>` (from file some_data_structure.c)
-  2. `<ioopm_some_public_other_function>` (from file some_data_structure.c)  
+- [ ] <some_data_structure.h>  
+  - [ ] `<ioopm_some_public_function>` (from file some_data_structure.c)
+  - [ ]  `<ioopm_some_public_other_function>` (from file some_data_structure.c)  
 
-[ ] <some_utility.h>
-  1. `<ioopm_some_public_function>` (from file some_utility.c)  
+- [ ] <some_utility.h>
+  - [ ] `<ioopm_some_public_function>` (from file some_utility.c)  
 
-[ ] <some_inteface.h>
-  1. `<ioopm_some_public_struct>` (from file some_inteface.c)
+- [ ] <some_inteface.h>
+  - [ ]  `<ioopm_some_public_struct>` (from file some_inteface.c)
