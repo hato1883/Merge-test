@@ -20,7 +20,7 @@ What will it handle
 
 ### `data_struct_t *ioopm_create_some_data_structure(void *some_argument, int or_more, error_t *error)`
 ##### Is Completed
-- [x] issue link here
+- [ ] issue link here
 
 ##### Responsibility
 - briefly describe purpose.  
@@ -52,7 +52,7 @@ Choose on of the following:
 
 ### `void ioopm_destroy_some_data_structure(void * some_argument)`
 ##### Is Completed
-- [x] issue link here
+- [ ] issue link here
 ##### Responsibility
 - Text here
 
@@ -74,7 +74,7 @@ Choose on of the following:
 
 ### `int get_int_data_from_struct(some_struct_t *some_argument)`
 ##### Is Completed
-- [x] issue link here  
+- [ ] issue link here  
 
 ##### Responsibility  
 - Text here
