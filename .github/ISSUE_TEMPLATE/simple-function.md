@@ -1,5 +1,5 @@
 ---
-name: SIMPLE Function implementaion specification
+name: "⚠️ Manual: SIMPLE Function implementaion specification"
 about: Template for documenting a function implementation that is included in a SIMPLE
   Module
 title: "[Specification] "

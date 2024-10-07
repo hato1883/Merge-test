@@ -1,5 +1,5 @@
 ---
-name: SIMPLE Module
+name: "⚠️ Manual: SIMPLE Module"
 about: Template for creating a SIMPLE Module
 title: "[Module] "
 labels: ["🎯 Roadmap", "Status: Triage"]
