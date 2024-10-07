@@ -1,8 +1,8 @@
 name: Add review template
 
 # **What it does**: When a specific label is added to a PR, adds the contents of .github/review-template.md as a comment in the PR
-# **Why we have it**: To help Docs Content team members ensure that their PR is ready for review
-# **Who does it impact**: docs-internal maintainers and contributors
+# **Why we have it**: To help reviewer know what to check for
+# **Who does it impact**: maintainers and contributors
 
 on:
   pull_request:
@@ -32,9 +32,10 @@ jobs:
           echo "$TEMPLATE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Comment on the PR
+      - name: Comment on the PR and remove label
         run: |
           gh pr comment $PR --body "$TEMPLATE"
+          gh pr edit $PR --remove-label 'add review template'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
             #${{ secrets.PAT_WORKFLOW_CLASSIC }}
