@@ -2,8 +2,8 @@
 name: SIMPLE Module
 about: Template for creating a SIMPLE Module
 title: "[Module] "
-labels: ''
-assignees: ''
+labels: ["🎯 Roadmap", "Status: Triage"]
+assignees: 'hato1883'
 
 ---
 

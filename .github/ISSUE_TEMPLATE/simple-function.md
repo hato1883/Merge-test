@@ -3,8 +3,8 @@ name: SIMPLE Function implementaion specification
 about: Template for documenting a function implementation that is included in a SIMPLE
   Module
 title: "[Specification] "
-labels: ''
-assignees: hato1883
+labels: ["🎯 Roadmap", "Status: Triage"]
+assignees: 'hato1883'
 
 ---
 

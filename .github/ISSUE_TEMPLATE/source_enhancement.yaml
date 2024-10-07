@@ -1,7 +1,14 @@
-name: Enhancement
-description: Suggest an Enhancement
-title: "[ENHANCE] <title>"
-labels: ["enhancement"]
+name: ✨ Code Enhancement
+description: |
+  Use this template if you have a Suggestion on an Enhancement of the code base.
+  This can be something like requesting:
+  that a function that is too long get rewritten.
+  optimize code to be more performant (backed with profiling arguments).
+  that a function that was hard to understand what it dose (and why) be rewritten.
+
+title: "[ENHANCE] replace_me"
+labels: ["✨ Enhancement", "Status: Triage"]
+assignees: 'hato1883'
 body:
 - type: dropdown
   attributes:
