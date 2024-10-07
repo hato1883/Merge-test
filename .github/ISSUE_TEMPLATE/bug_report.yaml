@@ -1,7 +1,8 @@
 name: 🐞 Bug
 description: File a bug/issue
 title: "[BUG] <title>"
-labels: ["bug"]
+labels: ["🐛 Bug", "Status: Triage"]
+assignees: 'hato1883'
 body:
 - type: textarea
   attributes:
