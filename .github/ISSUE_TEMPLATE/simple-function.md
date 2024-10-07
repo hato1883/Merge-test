@@ -4,7 +4,7 @@ about: Template for documenting a function implementation that is included in a 
   Module
 title: "[Specification] "
 labels: ''
-assignees: ''
+assignees: hato1883
 
 ---
 
