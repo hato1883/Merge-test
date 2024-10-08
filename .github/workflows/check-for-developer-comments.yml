@@ -1,4 +1,4 @@
-name: Add review template
+name: Check Codebase for Development only Comments
 
 # **What it does**: When a pull_request is opened it will check all source files (.c and .h) for any
 # Line containing either TODO or FIXME 
