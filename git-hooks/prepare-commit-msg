@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+# An example hook script to prepare the commit log message.
+# Called by "git commit" with the name of the file that has the
+# commit message, followed by the description of the commit
+# message's source.  The hook's purpose is to edit the commit
+# message file.  If the hook fails with a non-zero status,
+# the commit is aborted.
+#
+# To enable this hook, rename this file to "prepare-commit-msg".
+
+# This hook includes three examples. The first one removes the
+# "# Please enter the commit message..." help message.
+#
+# The second includes the output of "git diff --name-status -r"
+# into the message, just before the "git status" output.  It is
+# commented because it doesn't cope with --amend or with squashed
+# commits.
+#
+# The third example adds a Signed-off-by line to the message, that can
+# still be edited.  This is rarely a good idea.
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+if [ "${COMMIT_SOURCE}" = merge ];then
+    exit 0
+fi
+
+if test -d ./.git/rebase-merge; then
+    exit 0
+fi
+
+BRANCH=$(cat .git/HEAD)
+
+###
+# Check commit message if it matches our standard
+###
+
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE | head -1) 
+
+# We will Use this convetion: https://github.com/AshenCinders/CustomCommitConvention
+# Note that wip commits is allowed for local branches but we will force rebase before allowing a push.
+COMMIT_FORMAT="^(build|chore|cleanup|feat|fix|docs|improve|change|revert|perf|style|test|wip)(\((.*)\))?: (.*)$"
+COMMIT_FORMAT_NO_DOT="^(build|chore|cleanup|feat|fix|docs|improve|change|revert|perf|style|test|wip)(\((.*)\))?: (.*)[^\.]$"
+# Alternative
+#COMMIT_FORMAT="^(feat|fix|docs|style|refactor|test|chore|perf|other)(\((.*)\))?: #([0-9]+) (.*)$"
+
+echo "Checking if '$COMMIT_MSG' is valid"
+
+# Get length of line
+HEADER_LEN=${#COMMIT_MSG}
+if ! [[ "$COMMIT_MSG" =~ $COMMIT_FORMAT ]]; then
+  echo -e "\033[1;31mYour commit '$COMMIT_MSG' was rejected due format of the commit message.\033[0;37m" 
+  echo -e ""
+  echo -e "\033[31mPlease use the following format:\033[0;37m"
+  echo -e "\033[37mfeat: feature example comment\033[0;37m"
+  echo -e "\033[37mfix(ui): bugfix example comment\033[0;37m"
+  echo -e ""
+  echo -e "\033[31mMore details on https://github.com/AshenCinders/CustomCommitConvention\033[0;37m"
+  exit 1
+elif ! [[ "$COMMIT_MSG" =~ $COMMIT_FORMAT_NO_DOT ]]; then
+  echo -e "\033[1;31mYour commit was rejected due trailing dot (.) at end of header line\033[0;37m" 
+  echo -e ""
+  echo -e "\033[31mPlease use the following format:\033[0;37m"
+  echo -e "\033[37mfeat: feature example comment\033[0;37m"
+  echo -e "\033[37mfix(ui): bugfix example comment\033[0;37m"
+  echo -e ""
+  echo -e "\033[31mMore details on https://github.com/AshenCinders/CustomCommitConvention\033[0;37m"
+  exit 1
+elif [ $HEADER_LEN -gt 72 ]; then
+  echo -e "\033[1;31mYour commit was rejected due header line exceeding 72 characters\033[0;37m" 
+  echo -e ""
+  echo -e "\033[31mPlease use the following format:\033[0;37m"
+  echo -e "\033[37mfeat: feature example comment\033[0;37m"
+  echo -e "\033[37mfix(ui): bugfix example comment\033[0;37m"
+  echo -e ""
+  echo -e "\033[31mMore details on https://github.com/AshenCinders/CustomCommitConvention\033[0;37m"
+  exit 1
+fi
+
+#/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+
+# case "$COMMIT_SOURCE,$SHA1" in
+#  ,|template,)
+#    /usr/bin/perl -i.bak -pe '
+#       print "\n" . `git diff --cached --name-status -r`
+# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
+#  *) ;;
+# esac
+
+# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+# if test -z "$COMMIT_SOURCE"
+# then
+#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
+# fi
