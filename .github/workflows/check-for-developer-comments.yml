@@ -7,9 +7,9 @@ name: No TODO or FIXME comments
 
 on:
   push:
-    paths:
-      - '**.h'
-      - '**.c'
+#    paths:
+#      - '**.h'
+#      - '**.c'
 
 permissions:
     pull-requests: write
