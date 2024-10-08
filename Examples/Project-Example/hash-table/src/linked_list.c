@@ -615,7 +615,7 @@ int ioopm_iterator_remove(elem_t *return_removed, ioopm_list_iterator_t *iter)
     }
     else
     {
-        // TODO: Error Can not remove NULL ptr
+        // Error: Can not remove a NULL ptr
         //    User has not called ioopm_iterator_next after using ioopm_list_iterator (Creation)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_reset (Reset)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_remove (Removal of element)
@@ -650,7 +650,7 @@ int ioopm_iterator_insert(ioopm_list_iterator_t *iter, elem_t element)
     }
     else
     {
-        // TODO: Error Can not insert item before a NULL ptr
+        // Error: Can not insert item before a NULL ptr
         //    User has not called ioopm_iterator_next after using ioopm_list_iterator (Creation)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_reset (Reset)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_remove (Removal of element)
@@ -692,7 +692,7 @@ int ioopm_iterator_current(elem_t *return_current, const ioopm_list_iterator_t *
     }
     else
     {
-        // TODO: Error Can not retrive a elem_t from a NULL ptr
+        // Error: Can not retrive a elem_t from a NULL ptr
         //    User has not called ioopm_iterator_next after using ioopm_list_iterator (Creation)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_reset (Reset)
         // OR User has not called ioopm_iterator_next after using ioopm_iterator_remove (Removal of element)

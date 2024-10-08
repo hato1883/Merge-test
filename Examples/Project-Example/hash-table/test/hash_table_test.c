@@ -1039,7 +1039,7 @@ void hash_table_size_test(void)
         CU_ASSERT(size == (size_t)i);
     }
 
-    for (size_t i = 9; i >= 1; i--) // TODO change to i>=0
+    for (size_t i = 9; i >= 1; i--)
     {
         ioopm_hash_table_remove(ht, int_elem(i));
         ioopm_hash_table_size(&size, ht);
@@ -1048,14 +1048,6 @@ void hash_table_size_test(void)
 
     ioopm_hash_table_destroy(&ht);
 }
-
-// fixme hidden dev comment
-
-// fIxMe why would any one do this?
-
-// ToDo or this?
-
-// todo another dev comment
 
 void hash_table_clear_test(void)
 {
