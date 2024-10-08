@@ -33,4 +33,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Search for banned key words
-        run: bash ./.github/scripts/contains-development-comments
+        run: bash ./.github/scripts/contains-development-comments.sh
