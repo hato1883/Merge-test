@@ -1,18 +1,12 @@
-name: Check Codebase for Development only Comments
+name: No TODO or FIXME comments
 
-# **What it does**: When a pull_request is opened it will check all source files (.c and .h) for any
-# Line containing either TODO or FIXME 
+# **What it does**: When a push is done we will test our checks against the code
+# Checks can later be used to reject pull request for specific targets.
 # **Why we have it**: To help reviewer know what to check for
 # **Who does it impact**: maintainers and contributors
 
 on:
-  pull_request:
-    branches:
-      - default
-      - main
-      - master
-      - release/*
-      - prerelease/*
+  push:
     paths:
       - '**.h'
       - '**.c'
@@ -30,5 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Check if source code contains either TODO or FIXME messages
       - name: Search for banned key words
         run: bash ./.github/scripts/contains-development-comments.sh
