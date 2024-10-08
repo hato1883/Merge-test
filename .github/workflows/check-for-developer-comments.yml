@@ -7,8 +7,6 @@ name: Check Codebase for Development only Comments
 
 on:
   pull_request:
-    types:
-      - opened
     branches:
       - default
       - main
