@@ -1,0 +1,100 @@
+#!/bin/bash
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+LC_ALL=C
+
+LOCAL_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+#Backup_HYPHEN_CHECK="^(feature|bugfix|improvement|docs|prerelease|release|hotfix)\/[a-z0-9]+([-_][a-z0-9]+)*$"
+#Backup="^(feature|bugfix|improvement|docs|prerelease|release|hotfix)\/[a-z0-9]+([.][a-z0-9]+)*$"
+# Protected branches
+PROTECTED_BBRANCHES_REGEX="^(main|default|master|staging|development).*$"
+if [[ $LOCAL_BRANCH =~ $PROTECTED_BBRANCHES_REGEX ]]
+then # Print information why it failed
+  echo -e "\033[0;31mThe branch \033[1;31m'${LOCAL_BRANCH}'\033[0;31m is protected from commits\033[0;37m" 
+  echo -e ""
+  echo -e "\033[31mTo commit a change to this branch you will need to follow these steps: \033[0;37m"
+  echo -e "\033[31m 1. Stash current changes \033[0;37m"
+  echo -e "\033[31m 2. Make a new branch following branch naming scheme \033[0;37m"
+  echo -e "\033[31m 3. Publish the branch \033[0;37m"
+  echo -e "\033[31m 4. Apply changes from stash to new branch \033[0;37m"
+  echo -e "\033[31m 5. Commit changes using appropriate message \033[0;37m"
+  echo -e "\033[31m 6. Push to GitHub remote \033[0;37m"
+  echo -e "\033[31m 7. Create a pull request on GitHub to appropriate target\033[0;37m"
+  echo -e "\033[31m (some times you will need to merge into another branch before merging into your target) \033[0;37m"
+  exit 1
+fi
+
+# Check if branch matches expected rulesset for non release branches
+VALID_BRANCH_REGEX_NOT_RELEASE="^(feature|bugfix|improvement|docs|hotfix)\/(no-ref|issue-[0-9]+)\/[a-z0-9-]+$"
+# Check if branch matches expected rulesset release branches
+VALID_BRANCH_REGEX_RELEASE="^(prerelease|release)\/[a-z0-9.]+$"
+# Check if branch matches expected rulesset either of above rules
+VALID_BRANCH_REGEX="(${VALID_BRANCH_REGEX_NOT_RELEASE}|${VALID_BRANCH_REGEX_RELEASE})"
+
+# Same as above but now we specify that traling . or - is bad and that two or more of . or - is  bad
+VALID_BRANCH_REGEX_NOT_RELEASE_HYPHEN_CHECK="^(feature|bugfix|improvement|docs|hotfix)\/(no-ref|issue-[0-9]+)\/[a-z0-9]+(-[a-z0-9]+)*$"
+VALID_BRANCH_REGEX_RELEASE_HYPHEN_CHECK="^(prerelease|release)\/[a-z0-9]+([.][a-z0-9]+)*$"
+VALID_BRANCH_REGEX_HYPHEN_CHECK="(${VALID_BRANCH_REGEX_NOT_RELEASE_HYPHEN_CHECK}|${VALID_BRANCH_REGEX_RELEASE_HYPHEN_CHECK})"
+
+# Check first ruleset
+if [[ ! $LOCAL_BRANCH =~ $VALID_BRANCH_REGEX ]]
+then # Print information why it failed
+  echo -e "\033[0;31mYour branch \033[1;31m'${LOCAL_BRANCH}'\033[0;31m Was rejected due to failure to follow branch naming scheme\033[0;37m" 
+  echo -e ""
+  echo -e "\033[37mBranch names must start with one of the following: \033[0;37m"
+  echo -e ""
+  echo -e "\033[37mrelease or prerelease followed by version: \033[0;37m"
+  echo -e "\033[1;33m  release/     \033[3;34m A stable relase of the code  \033[0;37m"
+  echo -e "\033[1;33m  prerelease/  \033[3;34m When code is closing in on a stable relase  \033[0;37m"
+  echo -e "\033[30mNote: Must be folloved by a-z and periods '.' \033[0;37m"
+  echo -e "\033[30mExample 1: prerelease/v1.0.1.314 is \033[4;30mvalid\033[0;37m"
+  echo -e "\033[30mExample 2: release/v1 is \033[4;30mvalid\033[0;37m"
+  echo -e "\033[30mExample 3: release/v1-patch-2 is \033[4;30mNOT valid\033[0;37m"
+  echo -e ""
+  echo -e "\033[37mbranch type followed by issue refrence if one exist else 'no-ref' \033[0;37m"
+  echo -e "\033[1;33m  hotfix/      \033[3;34m Fix to bugs found in a release \033[0;37m"
+  echo -e "\033[1;33m  bugfix/      \033[3;34m Branch fixes a specific bug  \033[0;37m"
+  echo -e "\033[1;33m  feature/     \033[3;34m Branch contains code regarindg a specific new feature  \033[0;37m"
+  echo -e "\033[1;33m  improvement/ \033[3;34m Has targeted improvments to existing code  \033[0;37m"
+  echo -e "\033[1;33m  docs/        \033[3;34m Has documentation for code (preferably maximum of one file for each branch) \033[0;37m"
+  echo -e "\033[30mNote: Must be folloved by '/no-ref/' or '/issue-123/' followed by a-z and hyphens '-' \033[0;37m"
+  echo -e "\033[30mExample 1: feature/no-ref/added-cool-dragon is \033[4;30mvalid\033[0;37m"
+  echo -e "\033[30mExample 2: bugfix/issue-13/fix-dragon-not-being-cool is \033[4;30mvalid\033[0;37m"
+  echo -e "\033[30mExample 3: bugfix/fix-dragon-not-being-cool is \033[4;30mNOT valid\033[0;37m"
+  echo -e ""
+  echo -e "Use git branch -m \"new/name-here\""
+  echo -e "to rename current branch."
+  exit 1
+# Check Secound ruleset of delimiters
+elif [[ ! $LOCAL_BRANCH =~ $VALID_BRANCH_REGEX_HYPHEN_CHECK ]]
+then # Print information why it failed
+  echo -e "\033[0;31mYour branch \033[1;31m'${LOCAL_BRANCH}'\033[0;31m' Was rejected due Failing to follow Branch naming scheme \033[0;37m" 
+  echo -e ""
+  echo -e "\033[31mBranch names can not contain the folowing:         \033[0;37m"
+  echo -e "\033[3;33m  1. More than a single hyphen '--'              \033[0;37m"
+  echo -e "\033[3;33m  2. Traling hyphen '-' at end of name           \033[0;37m"
+  echo -e "\033[3;33m  3. More than a single period '..'                 \033[0;37m"
+  echo -e "\033[3;33m  4. Traling period '.' at end of name              \033[0;37m"
+  echo -e ""
+  echo -e "\033[37mUse git branch -m \"new/name-here\" \033[0;37m"
+  echo -e "\033[37mto rename current branch.           \033[0;37m"
+  echo -e ""
+  exit 1
+fi
+
+# Branch name is valid
+
+# Format code:
+#mvn fmt:format
+# Add changed files to commit
+#git diff --name-only --cached --diff-filter=d | xargs -l git add
+
+
+
+exit 0
