@@ -1,0 +1,37 @@
+name: Add review template
+
+# **What it does**: When a pull_request is opened it will check all source files (.c and .h) for any
+# Line containing either TODO or FIXME 
+# **Why we have it**: To help reviewer know what to check for
+# **Who does it impact**: maintainers and contributors
+
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - default
+      - main
+      - master
+      - release/*
+      - prerelease/*
+    paths:
+      - '**.h'
+      - '**.c'
+
+permissions:
+    pull-requests: write
+    contents: read
+
+jobs:
+  check-code:
+    name: Check code for developer comments that should not be in production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Jump through some hoops to work with a multi-line file
+      - name: Search for banned key words
+        run: ./.github/scripts/contains-development-comments
