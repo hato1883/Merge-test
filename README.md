@@ -12,3 +12,7 @@ This fixes issue [#6](https://github.com/hato1883/Merge-test/issues/6)
 
 ## Change 4
 This fixes issue [#7](https://github.com/hato1883/Merge-test/issues/7)
+
+
+bump
+bump
